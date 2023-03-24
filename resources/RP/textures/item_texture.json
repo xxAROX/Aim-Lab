@@ -1,0 +1,15 @@
+{
+    "resource_pack_name": "vanilla",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "aim_lab:leave": {
+            "textures": "textures/items/leave.png"
+        },
+        "aim_lab:play": {
+            "textures": "textures/items/play.png"
+        },
+        "aim_lab:settings": {
+            "textures": "textures/items/settings.png"
+        }
+    }
+}

@@ -1,0 +1,64 @@
+{
+    "name": "xxarox/aim-lab",
+    "type": "project",
+    "license": "LICENSE",
+    "authors": [{"name": "xxAROX"}],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "xxAROX\\AimLab\\": "src/xxAROX/AimLab/",
+            "customiesdevs\\customies\\": "vendor/customiesdevs/customies/src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "muqsit/simplepackethandler",
+                "version": "0.1.2",
+                "source": {
+                    "url": "https://github.com/Muqsit/SimplePacketHandler",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ivancraft623/languages",
+                "version": "0.0.2",
+                "source": {
+                    "url": "https://github.com/IvanCraft623/languages",
+                    "type": "git",
+                    "reference": "main"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "customiesdevs/customies",
+                "version": "1.2.0",
+                "source": {
+                    "url": "https://github.com/CustomiesDevs/Customies",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "customiesdevs/customies": "*",
+        "cortexpe/commando": "*",
+        "muqsit/simplepackethandler": "*",
+        "ivancraft623/languages": "*",
+        
+        "xxarox/bossbar-api": "dev-main",
+        "ext-gd": "*",
+        "ext-zip": "*"
+    },
+    "require-dev": {
+        "pocketmine/pocketmine-mp": "dev-stable"
+    }
+}

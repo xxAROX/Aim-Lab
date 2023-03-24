@@ -1,0 +1,18 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "aim_lab:entity",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/aim_lab"
+            },
+            "geometry": {
+                "default": "geometry.aim_lab"
+            },
+            "render_controllers": ["controller.render.default"]
+        }
+    }
+}

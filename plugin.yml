@@ -1,0 +1,10 @@
+name: "Aim-Lab"
+version: "1.0"
+author: "xxAROX"
+website: "https://github.com/xxAROX/Aim-Lab"
+description: "Aim-Lab plugin by xxAROX."
+
+api: [ "4.0.0" ]
+main: xxAROX\AimLab\AimLabPlugin
+depend:
+  - "Customies"
