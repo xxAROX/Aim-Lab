@@ -55,6 +55,8 @@
         "ivancraft623/languages": "*",
         
         "xxarox/bossbar-api": "dev-main",
+        "xxarox/forms": "dev-main",
+        
         "ext-gd": "*",
         "ext-zip": "*"
     },

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace xxAROX\AimLab\items;
+use customiesdevs\customies\item\component\CooldownComponent;
 use customiesdevs\customies\item\CreativeInventoryInfo;
 use customiesdevs\customies\item\CustomiesItemFactory;
 use customiesdevs\customies\item\ItemComponents;
@@ -25,8 +26,11 @@ class LeaveItem extends Item implements ItemComponents{
 	public function __construct(ItemIdentifier $identifier, string $name = "Unknown"){
 		parent::__construct($identifier, $name);
 		$this->initComponent(self::IDENTIFIER, CreativeInventoryInfo::DEFAULT());
+		$this->setUseCooldown(1, "aim_lab_items");
 	}
 
+
+	public function getCooldownTicks(): int{return 20;}
 	public function getMaxStackSize(): int{return 1;}
 	static function GET(): self{return CustomiesItemFactory::getInstance()->get(self::IDENTIFIER);}
 }

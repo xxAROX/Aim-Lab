@@ -5,6 +5,8 @@ use JetBrains\PhpStorm\Pure;
 use pocketmine\entity\Entity;
 use pocketmine\entity\EntitySizeInfo;
 use pocketmine\entity\Location;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
 use xxAROX\AimLab\player\AimLabSession;
@@ -29,6 +31,15 @@ class AimEntity extends Entity{
 		parent::onDispose();
 	}
 
+	public function attack(EntityDamageEvent $source): void{
+		$source->cancel();
+		if ($source instanceof EntityDamageByEntityEvent && $source->getDamager()->getId() === $this->session->getPlayer()->getId()) {
+			$this->session->hit();
+			$this->flagForDespawn();
+		}
+		parent::attack($source);
+	}
+
 	public function spawnTo(Player $player): void{
 		if (is_null($this->session)) $this->flagForDespawn();
 		parent::spawnTo($player);
@@ -39,4 +50,5 @@ class AimEntity extends Entity{
 	public function getSession(): AimLabSession{return $this->session;}
 	#[Pure] protected function getInitialSizeInfo(): EntitySizeInfo{return new EntitySizeInfo(0.55, 0.55);}
 	public static function getNetworkTypeId(): string{return self::IDENTIFIER;}
+	public function canSaveWithChunk(): bool{return false;}
 }

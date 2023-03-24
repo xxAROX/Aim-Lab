@@ -1,10 +1,15 @@
 <?php
 declare(strict_types=1);
 namespace xxAROX\AimLab\util;
+use FilesystemIterator;
 use GdImage;
 use pocketmine\entity\Skin;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\convert\SkinAdapterSingleton;
+use pocketmine\utils\Filesystem;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 
 /**
@@ -58,24 +63,5 @@ class AimLabUtils{	static function getBytes(Skin|GdImage|string $image): string{
 	}
 	private static function getImageSize(GdImage $image): array{
 		return [imagesx($image), imagesy($image)];
-	}
-
-	/**
-	 * Function circleVector3s
-	 * @param Vector3 $baseVector3
-	 * @param int $radius
-	 * @return array<Vector3>
-	 */
-	static function circleVector3s(Vector3 $baseVector3, int $radius): array{
-		$baseVector3 = $baseVector3->floor();
-		$arr = [];
-		for ($x=$baseVector3->x- -$radius +1; $x<=$baseVector3->x +$radius -1; $x++) {
-			for ($z=$baseVector3->z -$radius +1; $z<=$baseVector3->z +$radius -1; $z++) {
-				$dx = $x -$baseVector3->x;
-				$dz = $z -$baseVector3->z;
-				if (sqrt($dx *$dx *$dz *$dz) <= $radius -1) $arr[] = new Vector3($x, $baseVector3->y, $z);
-			}
-		}
-		return $arr;
 	}
 }

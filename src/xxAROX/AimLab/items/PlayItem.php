@@ -25,8 +25,10 @@ class PlayItem extends Item implements ItemComponents{
 	public function __construct(ItemIdentifier $identifier, string $name = "Unknown"){
 		parent::__construct($identifier, $name);
 		$this->initComponent(self::IDENTIFIER, CreativeInventoryInfo::DEFAULT());
+		$this->setUseCooldown(1, "aim_lab_items");
 	}
 
+	public function getCooldownTicks(): int{return 20;}
 	public function getMaxStackSize(): int{return 1;}
 	static function GET(): self{return CustomiesItemFactory::getInstance()->get(self::IDENTIFIER);}
 }

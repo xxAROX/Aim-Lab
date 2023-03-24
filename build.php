@@ -21,6 +21,7 @@ const INCLUDED_VIRIONS = [
 	"cortexpe/commando" => "CortexPE\\Commando",
 	"muqsit/simplepackethandler" => "muqsit\\simplepackethandler",
 	"xxarox/bossbar-api" => "xxAROX\\BossbarAPI",
+	"xxarox/forms" => "xxAROX\\forms",
 ];
 
 chdir("..");
