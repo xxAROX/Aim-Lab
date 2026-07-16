@@ -4,6 +4,8 @@ namespace xxAROX\AimLab\command;
 use CortexPE\Commando\BaseCommand;
 use CortexPE\Commando\constraint\InGameRequiredConstraint;
 use pocketmine\command\CommandSender;
+use pocketmine\permission\Permission;
+use pocketmine\permission\PermissionManager;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use xxAROX\AimLab\AimLabPlugin;
@@ -19,8 +21,11 @@ use xxAROX\AimLab\entity\AimEntity;
  * @project Aim-Lab
  */
 class AimLabCommand extends BaseCommand{
+	const PERMISSION = "xxarox.aimlab.command";
 	public function __construct(AimLabPlugin $plugin){
 		parent::__construct($plugin, "aimlab", "Aim-Lab command", ["alab"]);
+		PermissionManager::getInstance()->addPermission(new Permission(self::PERMISSION));
+		$this->setPermission(self::PERMISSION);
 	}
 
 	protected function prepare(): void{

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 const ENCODE_PLUGIN = true;
-define("LOCAL_SERVER_PATH", "C:/Users/" . getenv("USERNAME") . "/Desktop/pmmp4"); // string|null
+define("LOCAL_SERVER_PATH", "C:/php/server"); // string|null
 #define("LOCAL_SERVER_PATH", "null"); // string|null
 const PLUGIN_DESCRIPTION_FILE = "plugin.yml";
 $pluginDescription = yaml_parse_file(__DIR__ . DIRECTORY_SEPARATOR . PLUGIN_DESCRIPTION_FILE);
@@ -169,7 +169,9 @@ function out(string $message): void {
 function startServer(): void{
 	if (!is_dir(LOCAL_SERVER_PATH)) return;
 	if (!is_file(LOCAL_SERVER_PATH . "/start.bat")) return;
-	popen("start " . LOCAL_SERVER_PATH . "/start.bat", "r");
+	else popen("start " . LOCAL_SERVER_PATH . "/start.bat", "r");
+	if (!is_file(LOCAL_SERVER_PATH . "/start.cmd")) return;
+	else popen("start " . LOCAL_SERVER_PATH . "/start.cmd", "r");
 	exit;
 }
 function slashesToBackslashes(string $raw): string{

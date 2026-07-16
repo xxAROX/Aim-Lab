@@ -5,6 +5,9 @@
         "aim_lab:leave": {
             "textures": "textures/items/leave.png"
         },
+        "aim_lab:stats": {
+            "textures": "textures/items/stats.png"
+        },
         "aim_lab:play": {
             "textures": "textures/items/play.png"
         },

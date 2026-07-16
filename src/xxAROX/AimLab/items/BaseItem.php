@@ -46,6 +46,7 @@ use xxAROX\AimLab\util\TransactionCallbackStorage;
  * @project Core
  */
 trait BaseItem{
+	private ?Player $player = null;
 	private ?int $transactionCallbackId = null;
 	private ?Closure $entityInteractCallback = null; // Closure(Player $player, Entity $entity, Block $block): bool
 	private ?Closure $entityAttackCallback = null; // Closure(Player $player, Entity $victim): bool
@@ -70,7 +71,7 @@ trait BaseItem{
 	 * @param Vector3 $directionVector
 	 * @return ItemUseResult
 	 */
-	public function onClickAir(Player $player, Vector3 $directionVector): ItemUseResult{
+	public function onClickAir(Player $player, Vector3 $directionVector, array &$returnedItems): ItemUseResult{
 		/** @var Item $this */
 		if ($player->hasItemCooldown($this)) return ItemUseResult::FAIL();
 		if (!is_null($this->clickAirCallback)) ($this->clickAirCallback)($player, $directionVector);
@@ -88,7 +89,7 @@ trait BaseItem{
 	 * @param Vector3 $clickVector
 	 * @return ItemUseResult
 	 */
-	public function onInteractBlock(Player $player, Block $blockReplace, Block $blockClicked, int $face, Vector3 $clickVector): ItemUseResult{
+	public function onInteractBlock(Player $player, Block $blockReplace, Block $blockClicked, int $face, Vector3 $clickVector, array &$returnedItems): ItemUseResult{
 		/** @var Item $this */
 		if ($player->hasItemCooldown($this)) return ItemUseResult::FAIL();
 		if (!is_null($this->blockInteractCallback)) ($this->blockInteractCallback)($player, $blockReplace, $blockClicked, $face, $clickVector);
@@ -102,7 +103,7 @@ trait BaseItem{
 	 * @param Player $player
 	 * @return ItemUseResult
 	 */
-	public function onReleaseUsing(Player $player): ItemUseResult{
+	public function onReleaseUsing(Player $player, array &$returnedItems): ItemUseResult{
 		/** @var Item $this */
 		if ($player->hasItemCooldown($this)) return ItemUseResult::FAIL();
 		if (!is_null($this->releaseUsingCallback)) ($this->releaseUsingCallback)($player);
@@ -117,8 +118,9 @@ trait BaseItem{
 	 * @param Entity $victim
 	 * @return bool
 	 */
-	public function onAttackE(Player $player, Entity $victim): bool{
+	public function onAttackEntity(Entity $victim, array &$returnedItems): bool{
 		/** @var Item $this */
+		$player = $this->player;
 		if ($player->hasItemCooldown($this)) return false;
 		if (!is_null($this->entityAttackCallback)) ($this->entityAttackCallback)($player, $victim);
 		else if (!is_null($this->useCallback)) ($this->useCallback)($player);
@@ -164,7 +166,8 @@ trait BaseItem{
 	protected function init(Player $holder, string $custom_name = ""){
 		/** @var Item $this */
 		$player = $holder;
-		if (!empty($custom_name)) $this->setCustomName("§r${custom_name}§r");
+		if (!empty($custom_name)) $this->setCustomName("§r".$custom_name."§r");
+		$this->player  = $holder;
 	}
 
 	/**

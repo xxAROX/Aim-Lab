@@ -1,0 +1,20 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.aim_lab": {
+      "geometry": "Geometry.default",
+      "materials": [
+        { "*": "Material.default" }
+      ],
+      "textures": [
+        "Texture.default"
+      ],
+      "color": {
+        "r": "query.variant / 255.0",
+        "g": "query.mark_variant / 255.0",
+        "b": "query.trade_tier / 255.0",
+        "a": 1.0
+      }
+    }
+  }
+}

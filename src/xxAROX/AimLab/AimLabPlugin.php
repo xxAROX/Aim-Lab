@@ -14,6 +14,9 @@ use pocketmine\network\mcpe\protocol\PlayerActionPacket;
 use pocketmine\network\mcpe\protocol\ServerboundPacket;
 use pocketmine\network\mcpe\protocol\types\LevelSoundEvent;
 use pocketmine\network\mcpe\protocol\types\PlayerAction;
+use pocketmine\permission\Permission;
+use pocketmine\permission\PermissionManager;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\Filesystem;
@@ -27,6 +30,7 @@ use xxAROX\AimLab\entity\AimEntity;
 use xxAROX\AimLab\items\LeaveItem;
 use xxAROX\AimLab\items\PlayItem;
 use xxAROX\AimLab\items\SettingsItem;
+use xxAROX\AimLab\items\StatsItem;
 use xxAROX\AimLab\player\AimLabSession;
 use xxAROX\AimLab\util\RPGen;
 
@@ -48,6 +52,10 @@ final class AimLabPlugin extends PluginBase{
 	private const RP_VERSION = 6;
 
 	protected RPGen $RPGen;
+	/**
+	 * Summary of sessions
+	 * @var WeakMap<Player, AimLabSession>
+	 */
 	public WeakMap $sessions;
 
 	protected function onLoad(): void{
@@ -64,7 +72,8 @@ final class AimLabPlugin extends PluginBase{
 			if ($session instanceof AimLabSession && $packet->sound === LevelSoundEvent::ATTACK_NODAMAGE) $session->failed_hit();
 			return true;
 		});
-		$this->getServer()->getCommandMap()->register("AIM_LAB", new AimLabCommand($this));
+		$command = new AimLabCommand($this);
+		$this->getServer()->getCommandMap()->register("AIM_LAB", $command);
 
 		$interceptor->interceptOutgoing(function (PlayerActionPacket $packet, NetworkSession $networkSession): bool{
 			$player = $networkSession->getPlayer();
@@ -111,16 +120,18 @@ final class AimLabPlugin extends PluginBase{
 		CustomiesEntityFactory::getInstance()->registerEntity(AimEntity::class, AimEntity::IDENTIFIER);
 
 		CustomiesItemFactory::getInstance()->registerItem(PlayItem::class, PlayItem::IDENTIFIER, "§aPlay Aim-Lab");
-		CustomiesItemFactory::getInstance()->registerItem(LeaveItem::class, LeaveItem::IDENTIFIER, "§cLeave Aim-Lab");
+		CustomiesItemFactory::getInstance()->registerItem(StatsItem::class, StatsItem::IDENTIFIER, "§dYour stats");
 		CustomiesItemFactory::getInstance()->registerItem(SettingsItem::class, SettingsItem::IDENTIFIER, "§3Aim-Lab settings");
+		CustomiesItemFactory::getInstance()->registerItem(LeaveItem::class, LeaveItem::IDENTIFIER, "§cLeave Aim-Lab");
 
 		CreativeInventory::getInstance()->add(PlayItem::GET());
-		CreativeInventory::getInstance()->add(LeaveItem::GET());
+		CreativeInventory::getInstance()->add(StatsItem::GET());
 		CreativeInventory::getInstance()->add(SettingsItem::GET());
+		CreativeInventory::getInstance()->add(LeaveItem::GET());
 
 		$this->getScheduler()->scheduleRepeatingTask(new ClosureTask(function (): void{
 			foreach ($this->sessions->getIterator() as $player => $session) $session->tick();
-		}), 1);#
+		}), 1);
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 	}
 

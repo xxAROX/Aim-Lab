@@ -4,6 +4,9 @@
     "license": "LICENSE",
     "authors": [{"name": "xxAROX"}],
     "minimum-stability": "dev",
+    "scripts": {
+        "build": "@php -dphar.readonly=0 build.php"
+    },
     "autoload": {
         "psr-4": {
             "xxAROX\\AimLab\\": "src/xxAROX/AimLab/",
@@ -61,6 +64,6 @@
         "ext-zip": "*"
     },
     "require-dev": {
-        "pocketmine/pocketmine-mp": "dev-stable"
+        "pocketmine/pocketmine-mp": "*"
     }
 }
